@@ -1,9 +1,12 @@
-import React, { useContext } from 'react';
-import { FlatList, StyleSheet, Text, View, Button } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { FlatList, StyleSheet, Text, TextInput, View, Button } from 'react-native';
 import { TodoContext } from '../context/TodoContext';
 
 const TodoList: React.FC = () => {
   const { state: { todos }, dispatch } = useContext(TodoContext);
+
+  const [editingTodo, setEditingTodo] = useState(null); // to track which todo is being edited
+  const [todoBeingEdited, setTodoBeingEdited] = useState(''); // to keep the value of the todo item being edited
 
   const updateTodo = (todoToUpdate) => {
     dispatch({
@@ -11,8 +14,19 @@ const TodoList: React.FC = () => {
       payload: {
         ...todoToUpdate,
         completed: !todoToUpdate.completed,
-      }
+      },
     });
+  };
+
+  const startEditingTodo = (id, text) => {
+    setEditingTodo(id);
+    setTodoBeingEdited(text);
+  };
+
+  const submitEdit = (id) => {
+    dispatch({ type: 'EDIT_TODO', payload: { id, text: todoBeingEdited } });
+    setEditingTodo(null);
+    setTodoBeingEdited('');
   };
 
   const deleteTodo = (id) => {
@@ -21,13 +35,29 @@ const TodoList: React.FC = () => {
 
   const renderItem = ({ item }) => (
     <View style={styles.todo}>
-      <Text
-        style={[styles.todoText, item.completed ? styles.completed : null]}
-        onPress={() => updateTodo(item)}
-      >
-        {item.text}
-      </Text>
-      <Button title="Delete" onPress={() => deleteTodo(item.id)} />
+      {editingTodo === item.id ? (
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <TextInput
+            value={todoBeingEdited}
+            onChangeText={setTodoBeingEdited}
+            style={{ marginRight: 10, flex: 1 }}
+          />
+          <Button title="Submit Edit" onPress={() => submitEdit(item.id)} />
+        </View>
+      ) : (
+        <Text
+          style={[styles.todoText, item.completed ? styles.completed : null]}
+          onPress={() => updateTodo(item)}
+        >
+          {item.text}
+        </Text>
+      )}
+      <View style={{ flexDirection: 'row' }}>
+        {!item.completed && (
+          <Button title="Edit" onPress={() => startEditingTodo(item.id, item.text)} />
+        )}
+        <Button title="Delete" onPress={() => deleteTodo(item.id)} />
+      </View>
     </View>
   );
 
