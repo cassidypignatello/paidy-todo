@@ -2634,6 +2634,11 @@ commondir@^1.0.1:
   resolved "https://registry.yarnpkg.com/commondir/-/commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b"
   integrity sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==
 
+compare-versions@^3.4.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/compare-versions/-/compare-versions-3.6.0.tgz#1a5689913685e5a87637b8d3ffca75514ec41d62"
+  integrity sha512-W6Af2Iw1z4CB7q4uU4hv646dW9GQuBM+YpC0UvUCWSD8w90SJjp+ujJuXaEMtAXBtSqGfMPuFOVn4/+FlaqfBA==
+
 compressible@~2.0.16:
   version "2.0.18"
   resolved "https://registry.yarnpkg.com/compressible/-/compressible-2.0.18.tgz#af53cca6b070d4c3c0750fbd77286a6d7cc46fba"
@@ -3204,6 +3209,14 @@ expo-local-authentication@^13.4.1:
   resolved "https://registry.yarnpkg.com/expo-local-authentication/-/expo-local-authentication-13.4.1.tgz#908516d395530f6895d7980009e4c85cdcff5327"
   integrity sha512-FWTUkMNo9aDT3cg02SWAcSFjTiDu20izhCn5CGwdtFNCBpPQUD0BJ/czhjrIFE70teMzE5wZUdbJuSKYonUaWA==
   dependencies:
+    invariant "^2.2.4"
+
+expo-modules-core@^1.5.9:
+  version "1.5.9"
+  resolved "https://registry.yarnpkg.com/expo-modules-core/-/expo-modules-core-1.5.9.tgz#d8bc397860cabb23f735f5baac3602bd73231671"
+  integrity sha512-kQxllZfus7wM0O6X0Ud+SOnbH/kbxtEAQp2gkvDq3P3kqhtafue/H9CPDX04uWc/pypvp9vp/sZ+qvA0alaVuQ==
+  dependencies:
+    compare-versions "^3.4.0"
     invariant "^2.2.4"
 
 fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
