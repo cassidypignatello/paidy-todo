@@ -26,7 +26,8 @@ export const TodoContext = createContext<TodoContextProps>({
 type Action =
   | { type: "ADD_TODO"; payload: Todo }
   | { type: "DELETE_TODO"; payload: string }
-  | { type: "UPDATE_TODO"; payload: Todo };
+  | { type: "UPDATE_TODO"; payload: Todo }
+  | { type: "EDIT_TODO"; payload: Todo };
 
 export const todoReducer = (state: TodoState, action: Action): TodoState => {
   switch (action.type) {
@@ -42,6 +43,13 @@ export const todoReducer = (state: TodoState, action: Action): TodoState => {
         ...state,
         todos: state.todos.map((todo) =>
           todo.id === action.payload.id ? action.payload : todo
+        ),
+      };
+    case "EDIT_TODO":
+      return {
+        ...state,
+        todos: state.todos.map((todo) =>
+          todo.id === action.payload.id ? { ...todo, text: action.payload.text } : todo
         ),
       };
     default:
