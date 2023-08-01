@@ -1,14 +1,15 @@
 import React, { useContext, useState } from 'react';
-import { FlatList, StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { FlatList, StyleSheet, Text, TextInput, View, Button, ListRenderItem } from 'react-native';
 import { TodoContext } from '../context/TodoContext';
+import { Todo } from '../types';
 
 const TodoList: React.FC = () => {
   const { state: { todos }, dispatch } = useContext(TodoContext);
 
-  const [editingTodo, setEditingTodo] = useState(null); // to track which todo is being edited
-  const [todoBeingEdited, setTodoBeingEdited] = useState(''); // to keep the value of the todo item being edited
+  const [editingTodo, setEditingTodo] = useState<string | null>(null); // to track which todo is being edited
+  const [todoBeingEdited, setTodoBeingEdited] = useState<string>(''); // to keep the value of the todo item being edited
 
-  const updateTodo = (todoToUpdate) => {
+  const updateTodo = (todoToUpdate: Todo) => {
     dispatch({
       type: 'UPDATE_TODO',
       payload: {
@@ -18,22 +19,22 @@ const TodoList: React.FC = () => {
     });
   };
 
-  const startEditingTodo = (id, text) => {
+  const startEditingTodo = (id: string, text: string) => {
     setEditingTodo(id);
     setTodoBeingEdited(text);
   };
 
-  const submitEdit = (id) => {
+  const submitEdit = (id: string) => {
     dispatch({ type: 'EDIT_TODO', payload: { id, text: todoBeingEdited } });
     setEditingTodo(null);
     setTodoBeingEdited('');
   };
 
-  const deleteTodo = (id) => {
+  const deleteTodo = (id: string) => {
     dispatch({ type: 'DELETE_TODO', payload: id });
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem: ListRenderItem<Todo> = ({ item }) => (
     <View style={styles.todo}>
       {editingTodo === item.id ? (
         <View style={{ flex: 1, flexDirection: 'row' }}>
