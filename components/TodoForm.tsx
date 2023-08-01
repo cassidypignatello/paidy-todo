@@ -21,7 +21,8 @@ const TodoForm: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} value={text} onChangeText={setText} />
+      <TextInput style={styles.input} value={text} onChangeText={setText} placeholder="Enter todo..."
+      />
       <Button title="Add Todo" onPress={submitTodo} />
     </View>
   );
